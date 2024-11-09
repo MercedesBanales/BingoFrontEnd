@@ -5,6 +5,8 @@ import { LoginSchema } from '../schemas/LoginSchema.tsx';
 import { LoginValue } from '../types/LoginValue.tsx';
 import * as authenticationService from '../services/authenticationService.ts';
 import { useNavigate } from 'react-router-dom';
+import {store} from '../store.ts';
+import { login } from '../actions/actions.ts';
 
 interface Props {
     setError: (error: string) => void
@@ -12,10 +14,11 @@ interface Props {
 
 const LoginForm = ( { setError } : Props) => {
     const navigate = useNavigate();
-    
+
     const handleSubmit = async (values: { email: string, password: string }) => {
         try {
-            await authenticationService.login(values.email, values.password);
+            const token = await authenticationService.login(values.email, values.password);
+            store.dispatch(login(token));
             navigate('/home');
         } catch (error) {
             setError(error.response.data.message);
