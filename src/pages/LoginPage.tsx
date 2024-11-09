@@ -3,7 +3,9 @@ import LoginForm from '../components/LoginForm.tsx';
 
 const LoginPage = () => {
     return (
-        <LoginForm />
+        <div className="flex flex-col justify-center items-center w-full">
+            <LoginForm />
+        </div>
     )
 }
 

@@ -6,7 +6,7 @@ import LoginPage from './pages/LoginPage.tsx';
 const App = () => {
     return (
         <BrowserRouter>
-            <div>
+            <div className="flex justify-center items-center h-fill">
                 <Routes>
                     <Route path="/login" element={<LoginPage />} />
                 </Routes>
