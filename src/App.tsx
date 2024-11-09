@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage.tsx';
 import NavigationBar from './components/NavigationBar.tsx';
 import ErrorDialog from './components/ErrorDialog.tsx';
 import LobbyPage from './pages/LobbyPage.tsx';
+import GamePage from './pages/GamePage.tsx';
 
 const App = () => {
     return (
@@ -20,19 +21,18 @@ const AppRoutes = () => {
     const [error, setError] = React.useState<string | null>(null);
 
     return (
-        <>
+        <div className="flex flex-col min-h-screen">
         {location.pathname !== '/login' && <NavigationBar onError={setError}/>}
         {error && <ErrorDialog error={error} onClose={() => setError('')} />}
-        <div className="flex justify-center items-center h-full w-full">
-            {/* Conditionally render NavigationBar */}
-            
-            <Routes>
-                <Route path="/login" element={<LoginPage onError={setError} />} />
-                <Route path="/home" element={<HomePage />} />
-                <Route path="/lobby" element={<LobbyPage />} />
-            </Routes>
+        <div className="flex-grow flex justify-center items-center">
+                <Routes>
+                    <Route path="/login" element={<LoginPage onError={setError} />} />
+                    <Route path="/home" element={<HomePage />} />
+                    <Route path="/lobby" element={<LobbyPage />} />
+                    <Route path="/games/:id" element={<GamePage />} />
+                </Routes>
         </div>
-        </>
+        </div>
     );
 };
 
