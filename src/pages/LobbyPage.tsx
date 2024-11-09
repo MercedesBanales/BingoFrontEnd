@@ -30,7 +30,6 @@ const LobbyPage = () => {
 
             s.onmessage = function (event) {
                 const response: DataPacket = JSON.parse(event.data);
-                console.log(response.success);
                 if (response.success) startGame(response.data.game_id!);
                 else goHome();
             };
