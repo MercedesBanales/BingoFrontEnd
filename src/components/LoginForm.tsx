@@ -38,12 +38,12 @@ const LoginForm = ( { setError } : Props) => {
             }}
         >
             {
-                <Form className="flex flex-col items-center w-2/4 gap-8">
+                <Form className="flex flex-col items-center w-1/4 gap-8">
                 <div className="flex flex-col w-full gap-4">
                     <Input<LoginValue> name="email" label="" type="email" placeholder="johndoe@hotmail.com" />
                     <Input<LoginValue> name="password" label="" type="password" placeholder='*******' />
                 </div>
-                <button className="text-white bg-indigo-600 rounded-3xl px-8 py-2 w-fit shadow-md hover:font-semibold hover:shadow-lg" type="submit">Login</button>
+                <button className="text-white bg-indigo-600 rounded-2xl px-6 py-2 w-fit shadow-md hover:font-semibold hover:shadow-lg" type="submit">Login</button>
             </Form>
             }
         </Formik>
