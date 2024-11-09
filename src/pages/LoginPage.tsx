@@ -1,7 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
 import LoginForm from '../components/LoginForm.tsx';
-import ErrorDialog from '../components/ErrorDialog.tsx';
 
 export interface Props {
     onError: (error: string) => void  

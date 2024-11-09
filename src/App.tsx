@@ -20,19 +20,17 @@ const AppRoutes = () => {
     const [error, setError] = React.useState<string | null>(null);
 
     return (
-        <>
+        <div className="flex flex-col min-h-screen">
         {location.pathname !== '/login' && <NavigationBar onError={setError}/>}
         {error && <ErrorDialog error={error} onClose={() => setError('')} />}
-        <div className="flex justify-center items-center h-full w-full">
-            {/* Conditionally render NavigationBar */}
-            
-            <Routes>
-                <Route path="/login" element={<LoginPage onError={setError} />} />
-                <Route path="/home" element={<HomePage />} />
-                <Route path="/lobby" element={<LobbyPage />} />
-            </Routes>
+        <div className="flex-grow flex justify-center items-center">
+                <Routes>
+                    <Route path="/login" element={<LoginPage onError={setError} />} />
+                    <Route path="/home" element={<HomePage />} />
+                    <Route path="/lobby" element={<LobbyPage />} />
+                </Routes>
         </div>
-        </>
+        </div>
     );
 };
 
