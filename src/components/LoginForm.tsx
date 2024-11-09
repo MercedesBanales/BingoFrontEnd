@@ -5,7 +5,7 @@ import { LoginSchema } from '../schemas/LoginSchema.tsx';
 import { LoginValue } from '../types/LoginValue.tsx';
 import * as authenticationService from '../services/authenticationService.ts';
 import { useNavigate } from 'react-router-dom';
-import {store} from '../store.ts';
+import { store } from '../store.ts';
 import { login } from '../actions/actions.ts';
 
 interface Props {
