@@ -1,10 +1,16 @@
 import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import LoginPage from './pages/LoginPage.tsx';
 
 const App = () => {
     return (
-        <div>
-        <h1>Hello, World!</h1>
-        </div>
+        <BrowserRouter>
+            <div>
+                <Routes>
+                    <Route path="/login" element={<LoginPage />} />
+                </Routes>
+            </div>
+        </BrowserRouter>
     );
 }
 
