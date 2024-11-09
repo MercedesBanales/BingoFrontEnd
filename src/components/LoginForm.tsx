@@ -5,8 +5,9 @@ import { LoginSchema } from '../schemas/LoginSchema.tsx';
 import { LoginValue } from '../types/LoginValue.tsx';
 import * as authenticationService from '../services/authenticationService.ts';
 import { useNavigate } from 'react-router-dom';
-import { store } from '../store.ts';
-import { login } from '../actions/actions.ts';
+import { useDispatch } from 'react-redux';
+import { login } from '../reducers/authSlice.ts';
+
 
 interface Props {
     setError: (error: string) => void
@@ -14,11 +15,12 @@ interface Props {
 
 const LoginForm = ( { setError } : Props) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleSubmit = async (values: { email: string, password: string }) => {
         try {
             const token = await authenticationService.login(values.email, values.password);
-            store.dispatch(login(token));
+            dispatch(login(token));
             navigate('/home');
         } catch (error) {
             setError(error.response.data.message);
