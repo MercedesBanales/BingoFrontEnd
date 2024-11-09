@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik, Form} from 'formik';
 import Input from './Input.tsx';
 import { LoginSchema } from '../schemas/LoginSchema.tsx';
-import { LoginValue } from '../types/LoginValue.tsx';
+import { LoginValue } from '../types/LoginValue.ts';
 import * as authenticationService from '../services/authenticationService.ts';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -19,11 +19,11 @@ const LoginForm = ( { setError } : Props) => {
 
     const handleSubmit = async (values: { email: string, password: string }) => {
         try {
-            const token = await authenticationService.login(values.email, values.password);
-            dispatch(login(token));
+            const {token, id} = await authenticationService.login(values.email, values.password);
+            dispatch(login({token, id}));
             navigate('/home');
         } catch (error) {
-            setError(error.response.data.message);
+            setError(error.message);
         }
     }
 
