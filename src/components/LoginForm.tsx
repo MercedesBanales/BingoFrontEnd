@@ -6,16 +6,24 @@ import { LoginValue } from '../types/LoginValue.tsx';
 import * as authenticationService from '../services/authenticationService.ts';
 import { useNavigate } from 'react-router-dom';
 
+interface Props {
+    setError: (error: string) => void
+}
 
-const LoginForm = () => {
+const LoginForm = ( { setError } : Props) => {
     const navigate = useNavigate();
-
+    
     const handleSubmit = async (values: { email: string, password: string }) => {
-        await authenticationService.login(values.email, values.password);
-        navigate('/home');
+        try {
+            await authenticationService.login(values.email, values.password);
+            navigate('/home');
+        } catch (error) {
+            setError(error.response.data.message);
+        }
     }
 
     return (
+        <>
         <Formik
             initialValues={{ email: '', password: '',}}
             validationSchema={LoginSchema}
@@ -34,6 +42,8 @@ const LoginForm = () => {
             </Form>
             }
         </Formik>
+        </>
+        
     )
 }
 
