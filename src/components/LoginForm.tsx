@@ -3,9 +3,16 @@ import { Formik, Form} from 'formik';
 import Input from './Input.tsx';
 import { LoginSchema } from '../schemas/LoginSchema.tsx';
 import { LoginValue } from '../types/LoginValue.tsx';
+import * as authenticationService from '../services/authenticationService.ts';
+import { useNavigate } from 'react-router-dom';
+
 
 const LoginForm = () => {
-    const handleSubmit = (values: { email: string, password: string }) => {
+    const navigate = useNavigate();
+
+    const handleSubmit = async (values: { email: string, password: string }) => {
+        await authenticationService.login(values.email, values.password);
+        navigate('/home');
     }
 
     return (
