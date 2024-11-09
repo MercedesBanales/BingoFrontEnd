@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store.ts';
 import { DataPacket } from '../types/DataPacket.ts';
 import { useNavigate } from 'react-router-dom';
+import LobbyComponent from '../components/LobbyComponent.tsx';
 
 const MAX_WAIT_TIME = 60000; // 1 minute
 
@@ -58,16 +59,13 @@ const LobbyPage = () => {
         return () => {
             clearInterval(timer);
             if (socket) {
-                socket.close(); // Close the WebSocket connection when the component unmounts
+                socket.close(); 
             }
         };
     }, []);
 
     return (
-        <div>
-            <p>Waiting for more players to join...</p>
-            <p>Time remaining: {time / 1000} seconds</p> {/* Show time in seconds */}
-        </div>
+        <LobbyComponent time={time} />
     );
 }
 
