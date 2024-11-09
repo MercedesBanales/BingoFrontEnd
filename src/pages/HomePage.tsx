@@ -5,11 +5,9 @@ import NavigationBar from '../components/NavigationBar.tsx';
 
 
 const HomePage = () => {
-    const token = useSelector((state: RootState) => state.auth.token);
-    console.log(token)
     return (
         <div>
-            <h1>{token}</h1>
+            <button className="text-white bg-indigo-600 rounded-2xl px-6 py-2 w-fit shadow-md hover:font-semibold hover:shadow-lg">Start Game</button>
         </div>
     )
 }
