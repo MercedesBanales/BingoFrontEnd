@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage.tsx';
 import HomePage from './pages/HomePage.tsx';
 import NavigationBar from './components/NavigationBar.tsx';
 import ErrorDialog from './components/ErrorDialog.tsx';
+import LobbyPage from './pages/LobbyPage.tsx';
 
 const App = () => {
     return (
@@ -28,6 +29,7 @@ const AppRoutes = () => {
             <Routes>
                 <Route path="/login" element={<LoginPage onError={setError} />} />
                 <Route path="/home" element={<HomePage />} />
+                <Route path="/lobby" element={<LobbyPage />} />
             </Routes>
         </div>
         </>
