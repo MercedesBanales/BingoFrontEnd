@@ -1,14 +1,18 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store';
+import { useNavigate } from 'react-router-dom';
 
 
 const HomePage = () => {
-    const token = useSelector((state: RootState) => state.auth.token);
-    console.log(token)
+    const navigate = useNavigate();
+
+    const startGame = () => {
+        navigate('/lobby');
+    }
+
     return (
+
         <div>
-            <h1>{token}</h1>
+            <button className="text-white bg-indigo-400 rounded-2xl px-6 py-2 w-fit shadow-md hover:font-semibold hover:shadow-lg" onClick={startGame}>Start Game</button>
         </div>
     )
 }
