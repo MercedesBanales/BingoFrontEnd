@@ -43,7 +43,7 @@ const LoginForm = ( { setError } : Props) => {
                     <Input<LoginValue> name="email" label="" type="email" placeholder="johndoe@hotmail.com" />
                     <Input<LoginValue> name="password" label="" type="password" placeholder='*******' />
                 </div>
-                <button className="text-white bg-violet-400 rounded-3xl px-12 py-2 w-fit shadow-md hover:font-semibold hover:shadow-lg" type="submit">Login</button>
+                <button className="text-white bg-indigo-600 rounded-3xl px-8 py-2 w-fit shadow-md hover:font-semibold hover:shadow-lg" type="submit">Login</button>
             </Form>
             }
         </Formik>

@@ -15,7 +15,7 @@ const Input = <T,> ({ name, label, type, placeholder }: Props<T>) => {
     return (
         <>
         {label && <label className="text-black text-base font-medium">{label}</label>}
-        <Field id={name} {...field} type={type} className="bg-fuchsia-100 px-4 py-3 rounded-lg placeholder-gray-400 text-sm" placeholder={placeholder}/>
+        <Field id={name} {...field} type={type} className="px-3 py-2 w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6" placeholder={placeholder}/>
         {errors[name] && touched[name]? (
             <label className="text-red-500 text-sm w-fit">{(errors as any)[name]}</label>
         ) : null}
