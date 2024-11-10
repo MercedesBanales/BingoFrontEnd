@@ -23,13 +23,14 @@ const GamePage = () => {
             if (response.success) {
                 switch (response.action) {
                     case 'PUT':
-                        console.log(response.data);
+                        setCard(response.data.card);
                         break;
                     case 'BINGO':
                         console.log(response.data);
                         break;
                     case 'GET_CARD':
                         response as CardDataPacket;
+                        console.log(response.data.card);
                         setCard(response.data.card);
                         break;
                     case 'GET_PLAYERS':
@@ -41,11 +42,17 @@ const GamePage = () => {
                         console.log(response.data.sequence);
                         setSequence(response.data.sequence);
                         break;
+                    case 'PLAY':
+
 
                 }
             } 
         };
         
+    }
+
+    const handlePut = (coord_x: number, coord_y: number) => {
+        socket.send(JSON.stringify({ type: 'REQUEST', success: true, action: 'PUT', data: { player_id: player_id, game_id: id, coord_x: coord_x, coord_y: coord_y} }));
     }
 
     const loadCard = () => {
@@ -70,7 +77,7 @@ const GamePage = () => {
             </div>
             <div className="flex justify-center gap-40 items-stretch w-fit">
                 <div className="flex flex-col justify-center items-center gap-12">
-                    <Card card={card} />
+                    <Card card={card} onClick={handlePut} />
                     <button className="bg-indigo-500 px-6 py-4 rounded-2xl text-white shadow-md hover:font-medium hover:bg-indigo-700">BINGO</button>
                 </div>
                 <div className="flex-1 bg-indigo-100 rounded-lg">

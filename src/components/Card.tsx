@@ -2,13 +2,10 @@ import React from 'react';
 
 interface Props {
     card: number[][]
+    onClick: (coord_x: number, coord_y: number) => void
 }
 
-const Card = ({ card }) => {
-    const handleButtonClick = (number: number) => {
-        console.log(number);
-    };
-
+const Card = ({ card, onClick }) => {
     return (
         <div className="flex flex-col items-center justify-center gap-6 bg-indigo-100 p-4 rounded-md">
             <p className="text-black text-5xl font-medium">BINGO 75</p>
@@ -17,15 +14,15 @@ const Card = ({ card }) => {
             row.map((number: number, colIndex: number) => (
                 <button
                     key={`${rowIndex}-${colIndex}`}
-                    onClick={() => handleButtonClick(number)}
+                    onClick={() => onClick(rowIndex, colIndex)}
                     className={`p-4 rounded hover:bg-indigo-700 hover:text-white ${
-                        rowIndex === 2 && colIndex === 2
+                        number === 0
                             ? 'bg-indigo-700 text-white'
                             : 'bg-white text-black' 
                     }`}
-                    disabled={rowIndex === 2 && colIndex === 2}
+                    disabled={number === 0}
                 >
-                    {rowIndex===2 && colIndex===2 ? 'FREE' : number}
+                    {rowIndex===2 && colIndex===2 ? 'FREE' : (number === 0 ? '' : number)}
                 </button>
             ))
         ))}
