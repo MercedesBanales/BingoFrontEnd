@@ -33,7 +33,6 @@ const GamePage = ({ onError } : Props) => {
     const handleConnectionSocket = () => {
         socket.onmessage = function (event) {
             const response = JSON.parse(event.data);
-            console.log(response)
 
             if (response.success) {
                 switch (response.action) {
@@ -86,6 +85,7 @@ const GamePage = ({ onError } : Props) => {
 
     const handleClose = () => {
         setWinner(null);
+        socket.close();
         navigate('/home');
     }
 
@@ -121,7 +121,7 @@ const GamePage = ({ onError } : Props) => {
             <div className="flex justify-center gap-40 items-stretch w-fit">
                 <div className="flex flex-col justify-center items-center gap-12">
                     <Card card={card} onClick={handlePut} />
-                    <button className="bg-indigo-500 px-6 py-4 rounded-2xl text-white shadow-md hover:font-medium hover:bg-indigo-700" onClick={handleBingo}>BINGO</button>
+                    <button id='bingo_button' className="bg-indigo-500 px-6 py-4 rounded-2xl text-white shadow-md hover:font-medium hover:bg-indigo-700"  onClick={handleBingo}>BINGO</button>
                 </div>
                 <div className="flex-1 bg-indigo-100 rounded-lg">
                     <PlayersList players={players} />

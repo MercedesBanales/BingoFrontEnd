@@ -6,6 +6,11 @@ interface Props {
 }
 
 const Card = ({ card, onClick }) => {
+    const handleCellClick = (coord_x: number, coord_y: number) => (event: React.MouseEvent) => {
+        event.stopPropagation();
+        onClick(coord_x, coord_y);
+    };
+
     return (
         <div className="flex flex-col items-center justify-center gap-6 bg-indigo-100 p-4 rounded-md">
             <p className="text-black text-5xl font-medium">BINGO 75</p>
@@ -14,7 +19,7 @@ const Card = ({ card, onClick }) => {
             row.map((number: number, colIndex: number) => (
                 <button
                     key={`${rowIndex}-${colIndex}`}
-                    onClick={() => onClick(rowIndex, colIndex)}
+                    onClick={handleCellClick(rowIndex, colIndex)}
                     className={`p-4 rounded hover:bg-indigo-700 hover:text-white ${
                         number === 0
                             ? 'bg-indigo-700 text-white'
