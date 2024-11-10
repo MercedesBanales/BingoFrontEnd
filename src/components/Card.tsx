@@ -18,7 +18,12 @@ const Card = ({ card }) => {
                 <button
                     key={`${rowIndex}-${colIndex}`}
                     onClick={() => handleButtonClick(number)}
-                    className="p-4 bg-white text-black rounded hover:bg-indigo-700 hover:text-white"
+                    className={`p-4 rounded hover:bg-indigo-700 hover:text-white ${
+                        rowIndex === 2 && colIndex === 2
+                            ? 'bg-indigo-700 text-white'
+                            : 'bg-white text-black' 
+                    }`}
+                    disabled={rowIndex === 2 && colIndex === 2}
                 >
                     {rowIndex===2 && colIndex===2 ? 'FREE' : number}
                 </button>
