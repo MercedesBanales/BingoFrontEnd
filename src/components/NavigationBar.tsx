@@ -16,7 +16,6 @@ const NavigationBar = ({ onError }: Props) => {
 
     const handleLogout = async () => {
         try {
-            console.log(token);
             await authenticationService.logout(token);
             dispatch(logout());
             navigate('/login');

@@ -75,6 +75,7 @@ const GamePage = ({ onError } : Props) => {
                 } else {
                     onError(response.data.message);
                     if (response.action === 'BINGO') {
+                        socket.close();
                         navigate('/home');
                     }
                 }

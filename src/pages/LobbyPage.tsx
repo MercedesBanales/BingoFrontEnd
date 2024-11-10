@@ -61,8 +61,8 @@ const LobbyPage = () => {
     return (
         <>
          <div>
-            <p>Waiting for more players to join...</p>
-            <p>Time remaining: {time / 1000} seconds</p> {/* Show time in seconds */}
+            <p className="text-lg">Waiting for more players to join...</p>
+            <p className="text-xl font-medium">Time remaining: {time / 1000} seconds</p> {/* Show time in seconds */}
         </div>
         {display && <InfoDialog message={"Not enough players to start a game. You will be redirected to the Home page."} onClose={onClose}/>}
         </>
