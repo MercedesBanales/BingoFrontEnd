@@ -7,6 +7,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Card from '../components/Card.tsx';
 import PlayersList from '../components/PlayersList.tsx';
 import Sequence from '../components/Sequence.tsx';
+import LoadingAlert from '../components/LoadingAlert.tsx';
 
 interface Props {
     onError: (error: string) => void
@@ -17,6 +18,7 @@ const GamePage = ({ onError } : Props) => {
     const [card, setCard] = useState([[]]);
     const [players, setPlayers] = useState([]);
     const [sequence, setSequence] = useState([]);
+    const [loading, setLoading] = useState('');
     const { id } = useParams();
     const socket = getWebSocket();
     const navigate = useNavigate();
@@ -36,11 +38,13 @@ const GamePage = ({ onError } : Props) => {
                     case 'GET_CARD':
                         response as CardDataPacket;
                         setCard(response.data.card);
+                        setLoading('');
                         break;
                     case 'GET_PLAYERS':
                         response as PlayersDataPacket;
                         console.log(response.data.players);
                         setPlayers(response.data.players);
+                        setLoading('');
                         break;
                     case 'SEQ':
                         response as SequenceDataPacket;
@@ -50,9 +54,19 @@ const GamePage = ({ onError } : Props) => {
                         break;
                 }
             }  else {
-                onError(response.data.message);
-                if (response.action === 'BINGO') {
-                    navigate('/home');
+                if (response.action === 'GET_CARD') {
+                    console.log(response.data.message);
+                    setLoading('Loading card');
+                    loadCard();
+                } else if (response.action === 'GET_PLAYERS') {
+                    console.log(response.data.message);
+                    setLoading('Loading players');
+                    loadPlayers();
+                } else {
+                    onError(response.data.message);
+                    if (response.action === 'BINGO') {
+                        navigate('/home');
+                    }
                 }
             }
         };
@@ -77,13 +91,14 @@ const GamePage = ({ onError } : Props) => {
 
     useEffect(() => {
         handleConnectionSocket();
-        loadCard();
-        loadPlayers();
-
+            loadCard();
+            loadPlayers();
     }, [])
 
     return (
-        <div className="flex flex-col justify-center items-center gap-12 px-32">
+        <>
+        {loading!=='' && <LoadingAlert message={loading} />}
+        {loading==='' && <div className="flex flex-col justify-center items-center gap-12 px-32">
             <div>
                 <Sequence sequence={sequence.join(',')}/>
             </div>
@@ -96,8 +111,8 @@ const GamePage = ({ onError } : Props) => {
                     <PlayersList players={players} />
                 </div>
              </div>
-        </div>
-
+        </div>}
+        </>
     )
 }
 
