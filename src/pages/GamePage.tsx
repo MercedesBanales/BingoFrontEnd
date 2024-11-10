@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store.ts';
-import { CardDataPacket, PlayersDataPacket, SequenceDataPacket } from '../types/DataPacket.ts';
+import { BingoDataPacket, CardDataPacket, PlayersDataPacket, SequenceDataPacket } from '../types/DataPacket.ts';
 import { getWebSocket } from '../webSocketHandler.ts';
 import { useParams, useNavigate } from 'react-router-dom';
 import Card from '../components/Card.tsx';
 import PlayersList from '../components/PlayersList.tsx';
 import Sequence from '../components/Sequence.tsx';
 import LoadingAlert from '../components/LoadingAlert.tsx';
+import WinnerDialog from '../components/WinnerDialog.tsx';
+
+interface Winner {
+    id: string;
+    email: string;
+}
 
 interface Props {
     onError: (error: string) => void
@@ -19,6 +25,7 @@ const GamePage = ({ onError } : Props) => {
     const [players, setPlayers] = useState([]);
     const [sequence, setSequence] = useState([]);
     const [loading, setLoading] = useState('');
+    const [winner, setWinner] = useState<Winner | null>(null);
     const { id } = useParams();
     const socket = getWebSocket();
     const navigate = useNavigate();
@@ -26,14 +33,18 @@ const GamePage = ({ onError } : Props) => {
     const handleConnectionSocket = () => {
         socket.onmessage = function (event) {
             const response = JSON.parse(event.data);
+            console.log(response)
 
             if (response.success) {
                 switch (response.action) {
                     case 'PUT':
+                        response as CardDataPacket;
                         setCard(response.data.card);
                         break;
                     case 'BINGO':
-                        console.log(response.data);
+                        response as BingoDataPacket
+                        const winner = response.data.message.split('/');
+                        setWinner({id: winner[0], email: winner[1]});
                         break;
                     case 'GET_CARD':
                         response as CardDataPacket;
@@ -71,6 +82,11 @@ const GamePage = ({ onError } : Props) => {
             }
         };
         
+    }
+
+    const handleClose = () => {
+        setWinner(null);
+        navigate('/home');
     }
 
     const handlePut = (coord_x: number, coord_y: number) => {
@@ -112,6 +128,7 @@ const GamePage = ({ onError } : Props) => {
                 </div>
              </div>
         </div>}
+        {winner && <WinnerDialog title={winner.id === player_id ? 'You won' : winner.email}  message={winner.id===player_id ? 'You will be redirected to the homepage' : `${winner.email} has won the game. You will be redirected to the homepage`} onClose={handleClose}/>}
         </>
     )
 }
