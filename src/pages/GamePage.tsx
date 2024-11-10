@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store.ts';
-import { DataPacket } from '../types/DataPacket.ts';
+import { DataPacket, CardDataPacket } from '../types/DataPacket.ts';
 import { getWebSocket } from '../webSocketHandler.ts';
 import { useParams } from 'react-router-dom';
+import CardComponent from '../components/CardComponent.tsx';
 
 const GamePage = () => {
     const player_id = useSelector((state: RootState) => state.auth.id);
@@ -13,8 +14,7 @@ const GamePage = () => {
 
     const handleConnectionSocket = () => {
         socket.onmessage = function (event) {
-            const response: DataPacket = JSON.parse(event.data);
-            console.log(response)
+            const response = JSON.parse(event.data);
 
             if (response.success) {
                 switch (response.action) {
@@ -25,7 +25,8 @@ const GamePage = () => {
                         console.log(response.data);
                         break;
                     case 'GET_CARD':
-                        console.log(response.data);
+                        response as CardDataPacket;
+                        setCard(response.data.card);
                         break;
                     case 'GET_PLAYERS':
                         console.log(response.data);
@@ -53,8 +54,8 @@ const GamePage = () => {
     }, [])
 
     return (
-        <div>
-            <h1>Game Page</h1>
+        <div className="flex flex-col justify-center items-center">
+            <CardComponent card={card} />
         </div>
     )
 }
