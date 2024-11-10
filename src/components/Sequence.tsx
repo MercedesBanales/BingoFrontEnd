@@ -13,8 +13,7 @@ const Sequence = ({ sequence }: Props) => {
                 <span 
                     key={index} 
                     className={`${index === sequenceArray.length - 1 ? 'text-3xl font-bold' : 'text-xl'}`}
-                >
-                    {number},
+                > {number}{index === sequenceArray.length - 1 ? '' : ','} 
                 </span>
             ))}
         </div>

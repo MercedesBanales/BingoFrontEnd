@@ -13,7 +13,7 @@ const Card = ({ card, onClick }) => {
 
     return (
         <div className="flex flex-col items-center justify-center gap-6 bg-indigo-100 p-4 rounded-md">
-            <p className="text-black text-5xl font-medium">BINGO 75</p>
+            <p className="text-black text-6xl font-medium">BINGO 75</p>
             <div className="grid grid-cols-5 gap-2">
         {card.map((row: number[], rowIndex: number) => (
             row.map((number: number, colIndex: number) => (

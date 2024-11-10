@@ -116,7 +116,7 @@ const GamePage = ({ onError } : Props) => {
         {loading!=='' && <LoadingAlert message={loading} />}
         {loading==='' && <div className="flex flex-col justify-center items-center gap-12 px-32">
             <div>
-                <Sequence sequence={sequence.join(',')}/>
+                {sequence.length > 0 && <Sequence sequence={sequence.join(',')}/>}
             </div>
             <div className="flex justify-center gap-40 items-stretch w-fit">
                 <div className="flex flex-col justify-center items-center gap-12">
