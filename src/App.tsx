@@ -29,7 +29,7 @@ const AppRoutes = () => {
                     <Route path="/login" element={<LoginPage onError={setError} />} />
                     <Route path="/home" element={<HomePage />} />
                     <Route path="/lobby" element={<LobbyPage />} />
-                    <Route path="/games/:id" element={<GamePage />} />
+                    <Route path="/games/:id" element={<GamePage onError={setError} />} />
                 </Routes>
         </div>
         </div>

@@ -8,7 +8,11 @@ import Card from '../components/Card.tsx';
 import PlayersList from '../components/PlayersList.tsx';
 import Sequence from '../components/Sequence.tsx';
 
-const GamePage = () => {
+interface Props {
+    onError: (error: string) => void
+}
+
+const GamePage = ({ onError } : Props) => {
     const player_id = useSelector((state: RootState) => state.auth.id);
     const [card, setCard] = useState([[]]);
     const [players, setPlayers] = useState([]);
@@ -42,11 +46,12 @@ const GamePage = () => {
                         console.log(response.data.sequence);
                         setSequence(response.data.sequence);
                         break;
-                    case 'PLAY':
-
-
+                    default:
+                        break;
                 }
-            } 
+            }  else {
+                onError(response.data.message);
+            }
         };
         
     }
