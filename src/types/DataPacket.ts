@@ -24,3 +24,7 @@ export interface BingoDataPacket extends DataPacket {
 export interface StartDataPacket extends DataPacket {
     data: { player_id: string, game_id: string };
 }
+
+export interface SequenceDataPacket extends DataPacket {
+    data: { sequence: number[] };
+}
