@@ -7,6 +7,7 @@ import NavigationBar from './components/NavigationBar.tsx';
 import ErrorDialog from './components/ErrorDialog.tsx';
 import LobbyPage from './pages/LobbyPage.tsx';
 import GamePage from './pages/GamePage.tsx';
+import NotFoundPage from './pages/NotFoundPage.tsx';
 
 const App = () => {
     return (
@@ -22,7 +23,7 @@ const AppRoutes = () => {
 
     return (
         <div className="flex flex-col min-h-screen">
-        {location.pathname !== '/login' && <NavigationBar onError={setError}/>}
+        {(location.pathname === '/home' || location.pathname.startsWith('/games') || location.pathname === '/lobby') && <NavigationBar onError={setError}/>}
         {error && <ErrorDialog error={error} onClose={() => setError('')} />}
         <div className="flex-grow flex justify-center items-center">
                 <Routes>
@@ -30,6 +31,7 @@ const AppRoutes = () => {
                     <Route path="/home" element={<HomePage />} />
                     <Route path="/lobby" element={<LobbyPage />} />
                     <Route path="/games/:id" element={<GamePage onError={setError} />} />
+                    <Route path="*" element={<NotFoundPage />} />
                 </Routes>
         </div>
         </div>
