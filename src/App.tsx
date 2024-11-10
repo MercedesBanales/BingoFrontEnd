@@ -7,7 +7,8 @@ import NavigationBar from './components/NavigationBar.tsx';
 import ErrorDialog from './components/ErrorDialog.tsx';
 import LobbyPage from './pages/LobbyPage.tsx';
 import GamePage from './pages/GamePage.tsx';
-import NotFoundPage from './pages/NotFoundPage.tsx';
+import ErrorPage from './pages/ErrorPage.tsx';
+import GuardedRoute from './guards/GuardedRoute.tsx';
 
 const App = () => {
     return (
@@ -28,10 +29,21 @@ const AppRoutes = () => {
         <div className="flex-grow flex justify-center items-center">
                 <Routes>
                     <Route path="/login" element={<LoginPage onError={setError} />} />
-                    <Route path="/home" element={<HomePage />} />
-                    <Route path="/lobby" element={<LobbyPage />} />
-                    <Route path="/games/:id" element={<GamePage onError={setError} />} />
-                    <Route path="*" element={<NotFoundPage />} />
+                    <Route
+                        path="/home"
+                        element={<GuardedRoute element={<HomePage />} />}
+                    />
+                    <Route
+                        path="/lobby"
+                        element={<GuardedRoute element={<LobbyPage />} />}
+                    />
+                    <Route
+                        path="/games/:id"
+                        element={<GuardedRoute element={<GamePage onError={setError} />} />}
+                    />
+                    <Route path="/unauthorized" element={<ErrorPage title="401: Unauthorized" />} />
+                    <Route path="/forbidden" element={<ErrorPage title="403: Forbidden" />} />
+                    <Route path="*" element={<ErrorPage title="404: Page Not Found" />} />
                 </Routes>
         </div>
         </div>
