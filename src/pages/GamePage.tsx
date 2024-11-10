@@ -124,6 +124,7 @@ const GamePage = ({ onError } : Props) => {
                     <button id='bingo_button' className="bg-indigo-500 px-6 py-4 rounded-2xl text-white shadow-md hover:font-medium hover:bg-indigo-700"  onClick={handleBingo}>BINGO</button>
                 </div>
                 <div className="flex-1 bg-indigo-100 rounded-lg">
+                    <h1 className="px-2 pt-2 text-xl font-semibold flex justify-center items-center">Players in room</h1>
                     <PlayersList players={players} />
                 </div>
              </div>
