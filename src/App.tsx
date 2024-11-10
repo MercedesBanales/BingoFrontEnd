@@ -7,8 +7,8 @@ import NavigationBar from './components/NavigationBar.tsx';
 import ErrorDialog from './components/ErrorDialog.tsx';
 import LobbyPage from './pages/LobbyPage.tsx';
 import GamePage from './pages/GamePage.tsx';
-import ErrorPage from './pages/ErrorPage.tsx';
 import GuardedRoute from './guards/GuardedRoute.tsx';
+import NotFoundPage from './pages/NotFoundPage.tsx';
 
 const App = () => {
     return (
@@ -41,9 +41,7 @@ const AppRoutes = () => {
                         path="/games/:id"
                         element={<GuardedRoute element={<GamePage onError={setError} />} />}
                     />
-                    <Route path="/unauthorized" element={<ErrorPage title="401: Unauthorized" />} />
-                    <Route path="/forbidden" element={<ErrorPage title="403: Forbidden" />} />
-                    <Route path="*" element={<ErrorPage title="404: Page Not Found" />} />
+                    <Route path="*" element={<NotFoundPage />} />
                 </Routes>
         </div>
         </div>
