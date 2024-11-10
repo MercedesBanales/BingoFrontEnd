@@ -36,7 +36,6 @@ const GamePage = () => {
                         break;
                 }
             } 
-
         };
         
     }
@@ -57,14 +56,18 @@ const GamePage = () => {
     }, [])
 
     return (
-        <div className="flex justify-center gap-72 p-48 items-stretch w-full">
-           <div>
-                <Card card={card} />
-            </div>
-            <div className="flex-1 bg-indigo-100 rounded-lg">
-                <PlayersList players={players} />
-            </div>
+        <div className="flex flex-col justify-center items-center gap-12">
+            <div className="flex justify-center gap-56 items-stretch w-full">
+                <div className="flex flex-col justify-center items-center gap-12">
+                    <Card card={card} />
+                    <button className="bg-indigo-500 px-6 py-4 rounded-2xl text-white shadow-md hover:font-medium hover:bg-indigo-700">BINGO</button>
+                </div>
+                <div className="flex-1 bg-indigo-100 rounded-lg">
+                    <PlayersList players={players} />
+                </div>
+             </div>
         </div>
+
     )
 }
 
