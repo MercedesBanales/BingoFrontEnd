@@ -39,6 +39,7 @@ const GamePage = ({ onError } : Props) => {
                         break;
                     case 'GET_PLAYERS':
                         response as PlayersDataPacket;
+                        console.log(response.data.players);
                         setPlayers(response.data.players);
                         break;
                     case 'SEQ':
@@ -51,7 +52,6 @@ const GamePage = ({ onError } : Props) => {
             }  else {
                 onError(response.data.message);
                 if (response.action === 'BINGO') {
-                    socket.close();
                     navigate('/home');
                 }
             }
