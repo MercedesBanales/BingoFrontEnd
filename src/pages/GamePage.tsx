@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store.ts';
 import { CardDataPacket, PlayersDataPacket, SequenceDataPacket } from '../types/DataPacket.ts';
 import { getWebSocket } from '../webSocketHandler.ts';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Card from '../components/Card.tsx';
 import PlayersList from '../components/PlayersList.tsx';
 import Sequence from '../components/Sequence.tsx';
@@ -19,6 +19,7 @@ const GamePage = ({ onError } : Props) => {
     const [sequence, setSequence] = useState([]);
     const { id } = useParams();
     const socket = getWebSocket();
+    const navigate = useNavigate();
 
     const handleConnectionSocket = () => {
         socket.onmessage = function (event) {
@@ -34,7 +35,6 @@ const GamePage = ({ onError } : Props) => {
                         break;
                     case 'GET_CARD':
                         response as CardDataPacket;
-                        console.log(response.data.card);
                         setCard(response.data.card);
                         break;
                     case 'GET_PLAYERS':
@@ -43,7 +43,6 @@ const GamePage = ({ onError } : Props) => {
                         break;
                     case 'SEQ':
                         response as SequenceDataPacket;
-                        console.log(response.data.sequence);
                         setSequence(response.data.sequence);
                         break;
                     default:
@@ -51,6 +50,10 @@ const GamePage = ({ onError } : Props) => {
                 }
             }  else {
                 onError(response.data.message);
+                if (response.action === 'BINGO') {
+                    socket.close();
+                    navigate('/home');
+                }
             }
         };
         
@@ -58,6 +61,10 @@ const GamePage = ({ onError } : Props) => {
 
     const handlePut = (coord_x: number, coord_y: number) => {
         socket.send(JSON.stringify({ type: 'REQUEST', success: true, action: 'PUT', data: { player_id: player_id, game_id: id, coord_x: coord_x, coord_y: coord_y} }));
+    }
+
+    const handleBingo = () => {
+        socket.send(JSON.stringify({ type: 'REQUEST', success: true, action: 'BINGO', data: { player_id: player_id, game_id: id} }));
     }
 
     const loadCard = () => {
@@ -83,7 +90,7 @@ const GamePage = ({ onError } : Props) => {
             <div className="flex justify-center gap-40 items-stretch w-fit">
                 <div className="flex flex-col justify-center items-center gap-12">
                     <Card card={card} onClick={handlePut} />
-                    <button className="bg-indigo-500 px-6 py-4 rounded-2xl text-white shadow-md hover:font-medium hover:bg-indigo-700">BINGO</button>
+                    <button className="bg-indigo-500 px-6 py-4 rounded-2xl text-white shadow-md hover:font-medium hover:bg-indigo-700" onClick={handleBingo}>BINGO</button>
                 </div>
                 <div className="flex-1 bg-indigo-100 rounded-lg">
                     <PlayersList players={players} />
