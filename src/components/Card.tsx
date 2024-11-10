@@ -4,7 +4,7 @@ interface Props {
     card: number[][]
 }
 
-const CardComponent = ({ card }) => {
+const Card = ({ card }) => {
     const handleButtonClick = (number: number) => {
         console.log(number);
     };
@@ -16,7 +16,7 @@ const CardComponent = ({ card }) => {
                 <button
                     key={`${rowIndex}-${colIndex}`}
                     onClick={() => handleButtonClick(number)}
-                    className="p-4 bg-blue-500 text-white rounded hover:bg-blue-700"
+                    className="p-4 bg-indigo-100 text-black rounded hover:bg-blue-700"
                 >
                     {rowIndex===2 && colIndex===2 ? 'FREE' : number}
                 </button>
@@ -27,4 +27,4 @@ const CardComponent = ({ card }) => {
 
 };
 
-export default CardComponent;
+export default Card;

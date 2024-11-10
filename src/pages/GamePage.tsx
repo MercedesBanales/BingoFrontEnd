@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store.ts';
-import { DataPacket, CardDataPacket } from '../types/DataPacket.ts';
+import { DataPacket, CardDataPacket, PlayersDataPacket } from '../types/DataPacket.ts';
 import { getWebSocket } from '../webSocketHandler.ts';
 import { useParams } from 'react-router-dom';
-import CardComponent from '../components/CardComponent.tsx';
+import Card from '../components/Card.tsx';
+import PlayersList from '../components/PlayersList.tsx';
 
 const GamePage = () => {
     const player_id = useSelector((state: RootState) => state.auth.id);
     const [card, setCard] = useState([[]]);
+    const [players, setPlayers] = useState([]);
     const { id } = useParams();
     const socket = getWebSocket();
 
@@ -29,7 +31,8 @@ const GamePage = () => {
                         setCard(response.data.card);
                         break;
                     case 'GET_PLAYERS':
-                        console.log(response.data);
+                        response as PlayersDataPacket;
+                        setPlayers(response.data.players);
                         break;
                 }
             } 
@@ -54,8 +57,13 @@ const GamePage = () => {
     }, [])
 
     return (
-        <div className="flex flex-col justify-center items-center">
-            <CardComponent card={card} />
+        <div className="flex justify-center gap-72 p-48 items-stretch w-full">
+           <div>
+                <Card card={card} />
+            </div>
+            <div className="flex-1 bg-indigo-100 rounded-lg">
+                <PlayersList players={players} />
+            </div>
         </div>
     )
 }
