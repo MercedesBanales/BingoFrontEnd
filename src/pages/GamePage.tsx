@@ -7,7 +7,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Card from '../components/Card.tsx';
 import PlayersList from '../components/PlayersList.tsx';
 import Sequence from '../components/Sequence.tsx';
-import LoadingAlert from '../components/LoadingAlert.tsx';
+import InfoDialog from '../components/InfoDialog.tsx';
 import WinnerDialog from '../components/WinnerDialog.tsx';
 
 interface Winner {
@@ -113,7 +113,7 @@ const GamePage = ({ onError } : Props) => {
 
     return (
         <>
-        {loading!=='' && <LoadingAlert message={loading} />}
+        {loading!=='' && <InfoDialog message={loading} />}
         {loading==='' && <div className="flex flex-col justify-center items-center gap-12 px-32">
             <div>
                 {sequence.length > 0 && <Sequence sequence={sequence.join(',')}/>}
